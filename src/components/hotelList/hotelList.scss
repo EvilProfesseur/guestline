@@ -49,7 +49,7 @@ $headerHeight: 400px;
         transition-property: transform;
 
         &--scaled {
-            transform: translateY(-150px) scale(.5);
+            transform: translateY(-150px) scale(.5)!important;
         }
     }
 

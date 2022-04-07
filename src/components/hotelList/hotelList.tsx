@@ -46,14 +46,14 @@ export const HotelList = () => {
 
     const logoClasses = classNames({
         'hotel-list__logo': true,
-        'hotel-list__logo--scaled': scrollPos > 90
+        'hotel-list__logo--scaled': scrollPos > 110
     })
     
     return (
         <div className="hotel-list">
             <header className='hotel-list__header'>
                 <div className='hotel-list__bg' style={{transform: `translateY(-${scrollPos > 300 ? 300 : scrollPos}px)`}}></div>
-                <img className={logoClasses} src={logo} alt='Guestline logo' />
+                <img className={logoClasses} style={{transform: `translateY(-${scrollPos > 300 ? 300 : scrollPos}px)`}} src={logo} alt='Guestline logo' />
             </header>
             <Filters />
 
