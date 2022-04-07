@@ -1,0 +1,16 @@
+.star-rating {
+    padding-top: 1rem;
+    box-sizing: border-box;
+    
+    &__star {
+        width: 30px;
+        height: 30px;
+        stroke: rgb(235, 199, 0);
+        stroke-width: 5%;
+        fill: transparent;
+
+        &--checked {
+            fill:rgb(235, 199, 0);
+        }
+    }
+}

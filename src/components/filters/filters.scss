@@ -1,0 +1,73 @@
+@import '../../variables.scss';
+
+.filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 600px;
+    max-width: 95vw;
+    height: 70px;
+    transform: translateY(-50%);
+    background-color: #d02574;
+    border-radius: 5px;
+    padding: 1rem;
+    box-sizing: border-box;
+    color: white;
+    animation: entry $baseBezier 0.6s 0.5s 1 both;
+    position: sticky;
+    top: 120px;
+    z-index: 10;
+
+    &__star {
+        width: 35px;
+        height: 35px;
+        stroke: rgb(235, 199, 0);
+        stroke-width: 5%;
+        fill: transparent;
+        margin: 0 5px;
+        transition: $baseTransitionParams;
+        transition-property: fill;
+        cursor: pointer;
+
+        &--checked,
+        &:hover {            
+            fill:rgb(235, 199, 0);
+        }
+    }
+
+    &__occupants {
+        font-size: 1.5rem;
+    }
+
+    &__modifier {
+        margin: 0 0.5rem;
+        cursor: pointer;
+    }
+}
+
+@keyframes entry {
+    0% { 
+        transform: translateY(-75%);
+        opacity: 0;
+    }
+
+    100% { 
+        transform: translateY(-50%);
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .filters {
+        flex-wrap: wrap;
+        height: 120px;
+        justify-content: space-around;
+        top: 150px;
+        padding: 0.5rem;
+
+        &__rating {
+            width: 100%;
+            text-align: center;            
+        }
+    }
+}
