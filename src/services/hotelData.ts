@@ -5,14 +5,19 @@ import { setHotelDataState, setHotels, setRooms } from "../store/hotels"
 import { AppDispatch } from "../store/store";
 
 export const getHotelData = () => async (dispatch: AppDispatch) => {
-    dispatch(setHotelDataState(DataState.loading));
     fetch('https://obmng.dbm.guestline.net/api/hotels?collection-id=OBMNG', {
         method: 'GET'
     })
         .then(response => response.json())
         .then((data: IHotel[]) => {
             dispatch(setHotels(data));
-            dispatch(getRoomData(data.map(hotel => hotel.id)));
+            dispatch(getRoomData(data.map(hotel => hotel.id)))
+                .then(()=> {
+                    dispatch(setHotelDataState(DataState.ready));
+                });
+        })
+        .catch(() => {
+            dispatch(setHotelDataState(DataState.error));
         });
 }
 

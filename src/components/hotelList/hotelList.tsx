@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import classNames from "classnames";
 
 import './hotelList.scss';
 import logo from '../../assets/logo-white.png';
@@ -10,12 +11,13 @@ import { Filters } from "../filters/filters"
 import { Hotel } from "../hotel/hotel"
 import { useAppSelector } from "../../helpers/hooks";
 import { throttle } from "../../helpers/throttle";
-import classNames from "classnames";
+import { DataState } from "../../enums/dataState";
 
 export const HotelList = () => {
     const dispatch = useDispatch();
     const hotels = useSelector(selectAllHotels);
     const starRating = useAppSelector(state => state.filters.starRating);
+    const dataState = useAppSelector(state => state.hotels.dataState);
 
     const [scrollPos, setScrollPos] = useState(0);
 
@@ -27,12 +29,12 @@ export const HotelList = () => {
 
     useEffect(
         function controlHeaderPos() {
-            const onScroll = () => throttle(() => setScrollPos(window.scrollY), 16);
+            const onScroll = throttle(() => setScrollPos(window.scrollY), 16);
             
             document.addEventListener('scroll', onScroll);
 
             return () => document.removeEventListener('scroll', onScroll);
-        }
+        }, []
     )
 
     const filteredHotels = hotels
@@ -57,11 +59,14 @@ export const HotelList = () => {
             </header>
             <Filters />
 
-            <section className='hotel-list__hotels'>
+            {dataState === DataState.ready && <section className='hotel-list__hotels'>
                 {filteredHotels.length > 0 ? 
                     filteredHotels : 
-                    <div className='hotel-list__no-hits'>No hotels found</div>}
-            </section>
+                    <div className='hotel-list__no-hits'>No hotels found</div>
+                }
+            </section>}
+            
+            {dataState === DataState.error && <div className='hotel-list__no-hits'>Error loading hotels. Please refresh the page.</div>}
         </div>
     )
 }
